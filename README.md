@@ -1,11 +1,11 @@
 # Some of my thoughts: classification of skin color
 
 Other solutions 
-1. Image segmentation to obtain the face area
-2. Extract the skin part of the face, that is, remove the mouth and eye area
-3. Classification learning using machine learning clustering algorithm
+1. Image segmentation to obtain the face area.
+2. Extract the skin part of the face, that is, remove the mouth and eye area.
+3. Classification learning using machine learning clustering algorithm.
 
-## Remark
+## Remarks
 
 After the paper is accepted, I will make all the source code and training process public. Thank you for your support!
 
