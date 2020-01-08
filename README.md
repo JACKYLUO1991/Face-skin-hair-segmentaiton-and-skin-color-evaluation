@@ -1,12 +1,19 @@
-# 我的一些想法：关于皮肤颜色的分类
+# Some of my thoughts: classification of skin color
 
-1. 图像分割得到人脸区域
-2. 提取人脸皮肤部分, 即扣除嘴和眼睛区域
-3. 采用机器学习聚类算法对其进行具体分类学习
+Other solutions 
+1. Image segmentation to obtain the face area
+2. Extract the skin part of the face, that is, remove the mouth and eye area
+3. Classification learning using machine learning clustering algorithm
 
 
+References
+Please cite our paper if you find it useful in your research
 
-调研:  
-1. 颜色分类器依据
-2. 不同分类器比如svm rf 人工神经网络比较
-3. 评估方法 曲线、指标、5-折交叉实验
+@misc{luo2019realtime,
+    title={Real-time Segmentation and Facial Skin Tones Grading},
+    author={Ling Luo and Dingyu Xue and Xinglong Feng and Yichun Yu and Peng Wang},
+    year={2019},
+    eprint={1912.12888},
+    archivePrefix={arXiv},
+    primaryClass={cs.CV}
+}
