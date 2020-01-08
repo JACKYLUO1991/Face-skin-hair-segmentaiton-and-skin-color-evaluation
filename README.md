@@ -5,6 +5,9 @@ Other solutions
 2. Extract the skin part of the face, that is, remove the mouth and eye area
 3. Classification learning using machine learning clustering algorithm
 
+# Remark
+
+After the paper is accepted, I will make all the source code and training process public. Thank you for your support!
 
 References
 Please cite our paper if you find it useful in your research
