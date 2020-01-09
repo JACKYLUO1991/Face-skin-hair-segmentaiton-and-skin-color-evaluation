@@ -1,4 +1,4 @@
-# Some of my thoughts: classification of skin color
+# Real-time Segmentation and Facial Skin Tones Grading
 
 Other solutions 
 1. Image segmentation to obtain the face area.
