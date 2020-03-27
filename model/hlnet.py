@@ -105,7 +105,7 @@ def _depthwise_separable_block(inputs, kernel, strides, padding='same', depth_mu
     return Activation('relu')(x)
 
 
-def HLRNet(input_shape, cls_num=3):
+def HLNet(input_shape, cls_num=3):
     """Higt-Low Resolution Information fusion Network"""
     # input_shape: input image shape
     # cls_num: output class number
@@ -171,14 +171,16 @@ def HLRNet(input_shape, cls_num=3):
     x66 = _conv_block(x65, cls_num, (1, 1), use_activation=False)
     out = Activation('softmax')(x66)
 
-    out = Model(inputs, out)
-
-    return out
+    return Model(inputs, out)
 
 
 if __name__ == "__main__":
+    from flops import get_flops
+
     # Testing network design
-    model = HLRNet(input_shape=(224, 224, 3))
+    model = HLNet(input_shape=(256, 256, 3), cls_num=3)
     model.summary()
 
-    # plot_model(model, to_file='hlrnet.png')
+    print(get_flops(model))
+
+

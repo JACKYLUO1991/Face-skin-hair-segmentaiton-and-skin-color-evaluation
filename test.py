@@ -16,7 +16,7 @@ import tensorflow as tf
 tf.logging.set_verbosity(tf.logging.ERROR)
 
 from segmentation_models.backbones import get_preprocessing
-from model.hlrnet import HLRNet
+from model.hlnet import HLRNet
 from model.hrnet import HRNet
 from segmentation_models import PSPNet, Unet, FPN, Linknet
 from mtcnn.mtcnn import MTCNN
