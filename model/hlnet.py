@@ -6,6 +6,8 @@ from keras.layers import *
 from keras.models import Model
 from keras.utils import plot_model
 
+import keras.backend as K
+
 
 def _conv_block(inputs, filters, kernel, strides=1, padding='same', use_activation=False):
     """Convolution Block

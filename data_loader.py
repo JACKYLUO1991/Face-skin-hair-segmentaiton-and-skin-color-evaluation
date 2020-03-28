@@ -3,25 +3,23 @@ import cv2
 import os
 import random
 import glob
-from keras.preprocessing.image import ImageDataGenerator
-# from segmentation_models.backbones import get_preprocessing
+
 from keras.utils import Sequence
 from keras.applications.imagenet_utils import preprocess_input as pinput
-from albumentations import *
 
 
 class HairGenerator(Sequence):
 
     def __init__(self,
                  transformer,
-                 root_dir='./data/CelebA',
+                 root_dir,
                  mode='Training',
                  nb_classes=3,
                  batch_size=4,
                  backbone=None,
                  shuffle=False):
-        # backbone fit for segmentation_models，have been deleted now...
 
+        # backbone fit for segmentation_models，have been deleted now...
         assert mode in ['Training', 'Testing'], "Data set selection error..."
 
         self.image_path_list = sorted(
@@ -56,12 +54,6 @@ class HairGenerator(Sequence):
 
         images = np.array(images)
         masks = np.array(masks)
-
-        # if self.backbone is not None:
-        #     preprocess_input = get_preprocessing(self.backbone)
-        #     images = preprocess_input(images)
-        #
-        # else:
         images = pinput(images)
 
         return images, masks
@@ -94,16 +86,23 @@ class HairGenerator(Sequence):
     def _get_result_map(self, mask):
         """Processing mask data"""
 
-        # mask.shape[0]: row
-        # mask.shape[1]: column
+        # mask.shape[0]: row, mask.shape[1]: column
         result_map = np.zeros((mask.shape[1], mask.shape[0], self.nb_classes))
-        # For np.where calculation.
         # 0 (background pixel), 128 (face area pixel) or 255 (hair area pixel).
         skin = (mask == 128)
         hair = (mask == 255)
-        background = np.logical_not(hair + skin)
-        result_map[:, :, 0] = np.where(background, 1, 0)
-        result_map[:, :, 1] = np.where(skin, 1, 0)
-        result_map[:, :, 2] = np.where(hair, 1, 0)
+
+        if self.nb_classes == 2:
+            # hair = (mask > 128)
+            background = np.logical_not(hair)
+            result_map[:, :, 0] = np.where(background, 1, 0)
+            result_map[:, :, 1] = np.where(hair, 1, 0)
+        elif self.nb_classes == 3:
+            background = np.logical_not(hair + skin)
+            result_map[:, :, 0] = np.where(background, 1, 0)
+            result_map[:, :, 1] = np.where(skin, 1, 0)
+            result_map[:, :, 2] = np.where(hair, 1, 0)
+        else:
+            raise Exception("error...")
 
         return result_map

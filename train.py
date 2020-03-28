@@ -6,7 +6,7 @@ import warnings
 from keras import optimizers
 from keras import backend as K
 from keras.regularizers import l2
-from metric import mean_iou
+from metric import *
 from segmentation_models.losses import *
 import numpy as np
 
@@ -36,7 +36,7 @@ parser.add_argument("--epoches", '-e', help="epoch size",
                     type=int, default=150)
 parser.add_argument("--model_name", help="model's name",
                     choices=['hlnet', 'fastscnn', 'lednet', 'dfanet', 'enet', 'segnet'],
-                    type=str, default='fastscnn')
+                    type=str, default='hlnet')
 parser.add_argument("--learning_rate", help="learning rate", type=float, default=2.5e-3)
 parser.add_argument("--checkpoints",
                     help="where is the checkpoint", type=str, default='./weights')
@@ -125,24 +125,24 @@ def main():
         [Resize(height=IMG_SIZE, width=IMG_SIZE, always_apply=True)])
 
     train_generator = HairGenerator(
-        train_transformer, ROOT_DIR, mode='Training', batch_size=BATCH_SIZE,
+        train_transformer, ROOT_DIR, mode='Training', batch_size=BATCH_SIZE, nb_classes=CLS_NUM,
         backbone=BACKBONE, shuffle=True)
 
     val_generator = HairGenerator(
-        val_transformer, ROOT_DIR, mode='Testing', batch_size=BATCH_SIZE,
+        val_transformer, ROOT_DIR, mode='Testing', batch_size=BATCH_SIZE, nb_classes=CLS_NUM,
         backbone=BACKBONE)
 
     # Loading models
     model = get_model(MODEL_NAME)
     set_regularization(model, kernel_regularizer=l2(2e-5))
     model.compile(optimizer=optimizers.SGD(lr=LR, momentum=0.98),
-                  loss=cce_dice_loss, metrics=[mean_iou])
+                  loss=cce_dice_loss, metrics=[mean_iou, frequency_weighted_iou, mean_accuracy, pixel_accuracy])
 
     CHECKPOINT = CHECKPOINT + '/' + MODEL_NAME
     if not os.path.exists(CHECKPOINT):
         os.makedirs(CHECKPOINT)
 
-    checkpoint = ModelCheckpoint(filepath=os.path.join(CHECKPOINT, 'model-{epoch:03d}-{val_loss:.3f}.h5'),
+    checkpoint = ModelCheckpoint(filepath=os.path.join(CHECKPOINT, 'model-{epoch:03d}.h5'),
                                  monitor='val_loss',
                                  save_best_only=True,
                                  verbose=1)

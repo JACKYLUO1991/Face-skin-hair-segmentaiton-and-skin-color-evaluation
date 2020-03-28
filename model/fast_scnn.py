@@ -1,5 +1,5 @@
 import keras
-from keras.backend import tf as ktf
+import tensorflow as tf
 
 
 class Fast_SCNN:
@@ -103,7 +103,7 @@ class Fast_SCNN:
         self.classifier = self.conv_block(self.classifier, 'conv', self.classes, (1, 1), strides=(1, 1), padding='same',
                                           relu=False)
 
-        self.classifier = keras.layers.Lambda(lambda image: ktf.image.resize_images(image, (256, 256)), name='Resize')(
+        self.classifier = keras.layers.Lambda(lambda image: tf.image.resize_images(image, (256, 256)), name='Resize')(
             self.classifier)
         self.classifier = keras.layers.Dropout(0.3)(self.classifier)
 
