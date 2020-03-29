@@ -1,20 +1,31 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 # @Time    : 2020/3/27 17:41
 # @Author  : JackyLUO
 # @E-mail  : lingluo@stumail.neu.edu.cn
-# @Site    : 
+# @Site    :
 # @File    : enet.py
 # @Software: PyCharm
-
-from keras.layers.advanced_activations import PReLU
-from keras.layers.convolutional import Conv2D, Conv2DTranspose, UpSampling2D, ZeroPadding2D
-from keras.layers.core import SpatialDropout2D, Permute, Activation
-from keras.layers.merge import add, concatenate
-from keras.layers.normalization import BatchNormalization
-from keras.layers.pooling import MaxPooling2D
-from keras.engine.topology import Input
+#
+from keras.layers import *
 from keras.models import Model
+
+
+class Conv2DTransposeCustom(object):
+    """Fixed output shape bug..."""
+
+    def __init__(self, filters, kernel_size, strides=(1, 1), padding='same'):
+        self.filters = filters
+        self.kernel_size = kernel_size
+        self.strides = strides
+        self.padding = padding
+
+    def __call__(self, layer):
+        out = Conv2DTranspose(self.filters, self.kernel_size, strides=self.strides, padding=self.padding)(layer)
+        if not isinstance(self.strides, tuple):
+            self.strides = (self.strides, self.strides)
+        out.set_shape((out.shape[0], layer.shape[1] * self.strides[0], layer.shape[2] * self.strides[1], out.shape[3]))
+        return out
 
 
 def initial_block(inp, nb_filter=13, nb_row=3, nb_col=3, strides=(2, 2)):
@@ -108,7 +119,7 @@ def de_bottleneck(encoder, output, upsample=False, reverse_module=False):
     if not upsample:
         x = Conv2D(internal, (3, 3), padding='same', use_bias=True)(x)
     else:
-        x = Conv2DTranspose(filters=internal, kernel_size=(3, 3), strides=(2, 2), padding='same')(x)
+        x = Conv2DTransposeCustom(filters=internal, kernel_size=(3, 3), strides=(2, 2), padding='same')(x)
     x = BatchNormalization(momentum=0.1)(x)
     x = Activation('relu')(x)
 
@@ -138,7 +149,7 @@ def de_build(encoder, nc):
     enet = de_bottleneck(enet, 16, upsample=True, reverse_module=True)  # bottleneck 5.0
     enet = de_bottleneck(enet, 16)  # bottleneck 5.1
 
-    enet = Conv2DTranspose(filters=nc, kernel_size=(2, 2), strides=(2, 2), padding='same')(enet)
+    enet = Conv2DTransposeCustom(filters=nc, kernel_size=(2, 2), strides=(2, 2), padding='same')(enet)
     return enet
 
 
@@ -157,6 +168,6 @@ if __name__ == '__main__':
     from flops import get_flops
 
     model = ENet(input_shape=(256, 256, 3), cls_num=3)
-    model.summary()
+    # model.summary()
 
-    print(get_flops(model))
+    get_flops(model, True)

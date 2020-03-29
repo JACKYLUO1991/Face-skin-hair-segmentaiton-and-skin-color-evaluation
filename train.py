@@ -4,7 +4,6 @@ from keras.callbacks import ModelCheckpoint, CSVLogger, TensorBoard, LearningRat
 import os
 import warnings
 from keras import optimizers
-from keras import backend as K
 from keras.regularizers import l2
 from metric import *
 from segmentation_models.losses import *
@@ -15,7 +14,7 @@ from model.hlnet import HLNet
 from model.dfanet import DFANet
 from model.enet import ENet
 from model.lednet import LEDNet
-from model.segnet import SegNet
+from model.mobilenet import MobileNet
 from model.fast_scnn import Fast_SCNN
 
 warnings.filterwarnings("ignore")
@@ -35,7 +34,7 @@ parser.add_argument("--backbone", '-bb',
 parser.add_argument("--epoches", '-e', help="epoch size",
                     type=int, default=150)
 parser.add_argument("--model_name", help="model's name",
-                    choices=['hlnet', 'fastscnn', 'lednet', 'dfanet', 'enet', 'segnet'],
+                    choices=['hlnet', 'fastscnn', 'lednet', 'dfanet', 'enet', 'mobilenet'],
                     type=str, default='hlnet')
 parser.add_argument("--learning_rate", help="learning rate", type=float, default=2.5e-3)
 parser.add_argument("--checkpoints",
@@ -58,8 +57,8 @@ def get_model(name):
         model = DFANet(input_shape=(IMG_SIZE, IMG_SIZE, 3), cls_num=CLS_NUM, size_factor=2)
     elif name == 'enet':
         model = ENet(input_shape=(IMG_SIZE, IMG_SIZE, 3), cls_num=CLS_NUM)
-    elif name == 'segnet':
-        model = SegNet(input_shape=(IMG_SIZE, IMG_SIZE, 3), cls_num=CLS_NUM)
+    elif name == 'mobilenet':
+        model = MobileNet(input_shape=(IMG_SIZE, IMG_SIZE, 3), cls_num=CLS_NUM)
     else:
         raise NameError("No corresponding model...")
 

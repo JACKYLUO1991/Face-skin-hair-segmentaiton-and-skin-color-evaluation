@@ -1,24 +1,14 @@
-# Real-time Segmentation and Facial Skin Tones Grading
+# 我的一些想法：关于皮肤颜色的分类
 
-Other solutions 
-1. Image segmentation to obtain the face area.
-2. Extract the skin part of the face, that is, remove the mouth and eye area.
-3. Classification learning using machine learning clustering algorithm.
+1. 图像分割得到人脸区域
+2. 提取人脸皮肤部分, 即扣除嘴和眼睛区域
+3. 采用机器学习聚类算法对其进行具体分类学习
 
-## Remarks
 
-After the paper is accepted, I will make all the source code and training process public. Thank you for your support!
+keras save issue: https://github.com/keras-team/keras/issues/9342
 
-## References
-Please cite our paper if you find it useful in your research
 
-```
-@misc{luo2019realtime,
-    title={Real-time Segmentation and Facial Skin Tones Grading},
-    author={Ling Luo and Dingyu Xue and Xinglong Feng and Yichun Yu and Peng Wang},
-    year={2019},
-    eprint={1912.12888},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV}
-}
-```
+调研:  1. 颜色分类器依据
+
+			2. 不同分类器比如svm rf 人工神经网络比较
+   			3. 评估方法 曲线、指标、5-折交叉实验

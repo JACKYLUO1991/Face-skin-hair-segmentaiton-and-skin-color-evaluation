@@ -8,6 +8,7 @@
 # @Software: PyCharm
 
 from keras import layers, models
+import tensorflow as tf
 
 
 class LEDNet:
@@ -57,9 +58,14 @@ class LEDNet:
         return output
 
     def channel_split(self, x):
-        x_left = layers.Lambda(lambda y: y[:, :, :, :int(int(y.shape[-1]) // self.groups)])(x)
-        x_right = layers.Lambda(lambda y: y[:, :, :, int(int(y.shape[-1]) // self.groups):])(x)
-        return x_left, x_right
+        def splitter(y):
+            # keras Lambda saving bug!!!
+            # x_left = layers.Lambda(lambda y: y[:, :, :, :int(int(y.shape[-1]) // self.groups)])(x)
+            # x_right = layers.Lambda(lambda y: y[:, :, :, int(int(y.shape[-1]) // self.groups):])(x)
+            # return x_left, x_right
+            return tf.split(y, num_or_size_splits=self.groups, axis=-1)
+
+        return layers.Lambda(lambda y: splitter(y))(x)
 
     def down_sample(self, x, filters):
         x_filters = int(x.shape[-1])
@@ -143,4 +149,4 @@ if __name__ == '__main__':
     model = LEDNet(2, 3, (256, 256, 3)).model()
     model.summary()
 
-    print(get_flops(model))
+    get_flops(model)

@@ -3,6 +3,7 @@ import tensorflow as tf
 
 
 class Fast_SCNN:
+
     def __init__(self, num_classes=3, input_shape=(256, 256, 3)):
         self.classes = num_classes
         self.input_shape = input_shape
@@ -131,4 +132,4 @@ if __name__ == '__main__':
     model = Fast_SCNN(num_classes=3, input_shape=(256, 256, 3)).model()
     model.summary()
 
-    print(get_flops(model))
+    get_flops(model)

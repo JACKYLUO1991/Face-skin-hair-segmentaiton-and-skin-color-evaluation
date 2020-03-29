@@ -9,6 +9,7 @@
 
 from keras.layers import *
 from keras.models import Model
+import keras.backend as K
 
 
 def ConvBlock(inputs, n_filters, kernel_size=3, strides=1):
@@ -193,4 +194,4 @@ if __name__ == '__main__':
     model = DFANet(input_shape=(256, 256, 3), cls_num=3, size_factor=2)
     model.summary()
 
-    print(get_flops(model))
+    get_flops(model)

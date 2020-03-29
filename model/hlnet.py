@@ -183,6 +183,4 @@ if __name__ == "__main__":
     model = HLNet(input_shape=(256, 256, 3), cls_num=3)
     model.summary()
 
-    print(get_flops(model))
-
-
+    get_flops(model)
