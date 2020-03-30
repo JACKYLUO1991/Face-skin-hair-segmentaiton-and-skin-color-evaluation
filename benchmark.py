@@ -57,7 +57,7 @@ def main():
 
     time_per_batch = []
 
-    for i in tqdm(range(100)):
+    for i in tqdm(range(500)):
         start = time.time()
         model.predict(inputs, batch_size=args.batch_size)
         elapsed = time.time() - start

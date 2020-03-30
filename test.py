@@ -9,6 +9,7 @@ import os
 import argparse
 from metric import *
 import glob
+from model.fast_scnn import resize_image
 from segmentation_models.losses import *
 
 import warnings
@@ -41,7 +42,7 @@ def vis_parsing_maps(im, parsing_anno, data_name):
     # Guided filter
     # vis_parsing_anno_color = cv.ximgproc.guidedFilter(
     #     guide=vis_im, src=vis_parsing_anno_color, radius=4, eps=50, dDepth=-1)
-    vis_im = cv.addWeighted(vis_im, 0.5, vis_parsing_anno_color, 0.5, 0)
+    vis_im = cv.addWeighted(vis_im, 0.7, vis_parsing_anno_color, 0.3, 0)
 
     return vis_im
 
@@ -50,23 +51,29 @@ if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--image_size",
-                        help="size of image", type=int, default=224)
+                        help="size of image", type=int, default=256)
     parser.add_argument("--model_path",
                         help="the path of model", type=str,
-                        default='./weights/celebhair/model.h5')
-    parser.add_argument("--class_number",
-                        help="number of output", type=int, default=2)
+                        default='./weights/celebhair/exper/fastscnn/model.h5')
     args = parser.parse_args()
 
     IMG_SIZE = args.image_size
     MODEL_PATH = args.model_path
-    CLS_NUM = args.class_number
 
-    model = load_model(MODEL_PATH, custom_objects={'mean_accuracy': mean_accuracy,
-                                                   'mean_iou': mean_iou,
-                                                   'frequency_weighted_iou': frequency_weighted_iou,
-                                                   'pixel_accuracy': pixel_accuracy,
-                                                   'categorical_crossentropy_plus_dice_loss': cce_dice_loss})
+    if MODEL_PATH.split('/')[-2] == 'lednet':
+        from model.lednet import LEDNet
+
+        model = LEDNet(2, 3, (256, 256, 3)).model()
+        model.load_weights(MODEL_PATH)
+
+    else:
+        model = load_model(MODEL_PATH, custom_objects={'mean_accuracy': mean_accuracy,
+                                                       'mean_iou': mean_iou,
+                                                       'frequency_weighted_iou': frequency_weighted_iou,
+                                                       'pixel_accuracy': pixel_accuracy,
+                                                       'categorical_crossentropy_plus_dice_loss': cce_dice_loss,
+                                                       'resize_image': resize_image})
+
     data_name = MODEL_PATH.split('/')[2]
 
     for img_path in glob.glob(os.path.join("./demo", data_name, "*.jpg")):

@@ -11,7 +11,6 @@ from keras.models import *
 from keras.layers import *
 
 
-# Width Multiplier: Thinner Models
 def conv_block(inputs, filters, alpha, kernel=(3, 3), strides=(1, 1)):
     filters = int(filters * alpha)
     x = ZeroPadding2D(padding=(1, 1), name='conv1_pad')(inputs)
@@ -33,25 +32,23 @@ def depthwise_conv_block(inputs, pointwise_conv_filters, alpha, depth_multiplier
     return ReLU(6, name='conv_pw_%d_relu' % block_id)(x)
 
 
-def MobileNet(input_shape, cls_num):
+def MobileNet(input_shape, cls_num, alpha=0.5):
     inputs = Input(input_shape)
-    alpha = 0.25
-    depth_multiplier = 6
     x = conv_block(inputs, 16, alpha, strides=(2, 2))
-    x = depthwise_conv_block(x, 16, alpha, depth_multiplier, block_id=1)
+    x = depthwise_conv_block(x, 16, alpha, 6, block_id=1)
     f1 = x
-    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, strides=(2, 2), block_id=2)
-    x = depthwise_conv_block(x, 32, alpha, depth_multiplier, block_id=3)
+    x = depthwise_conv_block(x, 32, alpha, 6, strides=(2, 2), block_id=2)
+    x = depthwise_conv_block(x, 32, alpha, 6, block_id=3)
     f2 = x
-    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, strides=(2, 2), block_id=4)
-    x = depthwise_conv_block(x, 64, alpha, depth_multiplier, block_id=5)
+    x = depthwise_conv_block(x, 64, alpha, 6, strides=(2, 2), block_id=4)
+    x = depthwise_conv_block(x, 64, alpha, 6, block_id=5)
     f3 = x
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, strides=(2, 2), block_id=6)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=7)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=8)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=9)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=10)
-    x = depthwise_conv_block(x, 128, alpha, depth_multiplier, block_id=11)
+    x = depthwise_conv_block(x, 128, alpha, 6, strides=(2, 2), block_id=6)
+    x = depthwise_conv_block(x, 128, alpha, 6, block_id=7)
+    x = depthwise_conv_block(x, 128, alpha, 6, block_id=8)
+    x = depthwise_conv_block(x, 128, alpha, 6, block_id=9)
+    x = depthwise_conv_block(x, 128, alpha, 6, block_id=10)
+    x = depthwise_conv_block(x, 128, alpha, 6, block_id=11)
 
     o = x
     o = Conv2D(128, (3, 3), activation='relu', padding='same')(o)

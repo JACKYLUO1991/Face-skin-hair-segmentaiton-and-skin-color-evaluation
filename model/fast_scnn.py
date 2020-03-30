@@ -2,6 +2,10 @@ import keras
 import tensorflow as tf
 
 
+def resize_image(image):
+    return tf.image.resize_images(image, (256, 256))
+
+
 class Fast_SCNN:
 
     def __init__(self, num_classes=3, input_shape=(256, 256, 3)):
@@ -103,9 +107,7 @@ class Fast_SCNN:
 
         self.classifier = self.conv_block(self.classifier, 'conv', self.classes, (1, 1), strides=(1, 1), padding='same',
                                           relu=False)
-
-        self.classifier = keras.layers.Lambda(lambda image: tf.image.resize_images(image, (256, 256)), name='Resize')(
-            self.classifier)
+        self.classifier = keras.layers.Lambda(lambda image: resize_image(image), name='Resize')(self.classifier)
         self.classifier = keras.layers.Dropout(0.3)(self.classifier)
 
     def activation(self, activation='softmax'):
