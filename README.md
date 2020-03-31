@@ -8,7 +8,7 @@
 keras save issue: https://github.com/keras-team/keras/issues/9342
 
 
-调研:  1. 颜色分类器依据
-
-			2. 不同分类器比如svm rf 人工神经网络比较
-   			3. 评估方法 曲线、指标、5-折交叉实验
+调研:  
+1. 颜色分类器依据
+2. 不同分类器比如svm rf 人工神经网络比较
+3. 评估方法 曲线、指标、5-折交叉实验
