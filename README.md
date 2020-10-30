@@ -1,4 +1,4 @@
-## Abstract
+## Abstract:
 
 Real-time semantic segmentation plays a crucial role in industrial applications, such as
 autonomous driving, the beauty industry, and so on. It is a challenging problem to balance the
@@ -14,10 +14,10 @@ input, using our HLNet, we achieve 78.39% mean IoU on Figaro1k dataset at over 1
 of the CPU environment. We further use the masked color moment for skin tone grade evaluation
 and approximate 80% classification accuracy demonstrate the feasibility of the proposed method.  
 
-## 最新的工作 (The latest open source code)
+## The latest open source code:
 https://github.com/JACKYLUO1991/FaceParsing.
 
-## Please cited
+## Please cited:
 
 ```
 @article{luo2019real,
