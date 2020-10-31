@@ -1,5 +1,6 @@
-## Abstract:
+## HLNet: A Unified Framework for Real-Time Segmentation and Facial Skin Tones Evaluation
 
+## Abstract:
 Real-time semantic segmentation plays a crucial role in industrial applications, such as
 autonomous driving, the beauty industry, and so on. It is a challenging problem to balance the
 relationship between speed and segmentation performance. To address such a complex task, this
@@ -17,8 +18,9 @@ and approximate 80% classification accuracy demonstrate the feasibility of the p
 ## The latest open source code:
 https://github.com/JACKYLUO1991/FaceParsing.
 
-## Please cited:
+## This work is accepted by Symmetry-Basel!
 
+## Please cited:
 ```
 @article{luo2019real,
   title={Real-time Segmentation and Facial Skin Tones Grading},
