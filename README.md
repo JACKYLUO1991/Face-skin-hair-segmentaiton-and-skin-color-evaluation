@@ -19,8 +19,8 @@ and approximate 80% classification accuracy demonstrate the feasibility of the p
 https://github.com/JACKYLUO1991/FaceParsing.
 
 ## Problem correction:
-It is worth noting that some training sets are mistaken for test sets in image file copying, which 
-leads to high results in arXiv. The current version has been corrected.
+### It is worth noting that some training sets are mistaken for test sets in image file copying, which 
+### leads to high results in arXiv. The current version has been corrected.
 
 ## Please cited:
 ```
