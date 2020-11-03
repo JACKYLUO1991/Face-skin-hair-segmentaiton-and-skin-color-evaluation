@@ -15,18 +15,24 @@ input, using our HLNet, we achieve 78.39% mean IoU on Figaro1k dataset at over 1
 of the CPU environment. We further use the masked color moment for skin tone grade evaluation
 and approximate 80% classification accuracy demonstrate the feasibility of the proposed method.  
 
-## The latest open source code:
+## The latest open source work:
 https://github.com/JACKYLUO1991/FaceParsing.
 
-## This work is accepted by Symmetry-Basel!
+## Problem correction:
+It is worth noting that some training sets are mistaken for test sets in image file copying, which 
+leads to high results in arXiv. The current version has been corrected.
 
 ## Please cited:
 ```
-@article{luo2019real,
-  title={Real-time Segmentation and Facial Skin Tones Grading},
-  author={Luo, Ling and Xue, Dingyu and Feng, Xinglong and Yu, Yichun and Wang, Peng},
-  journal={arXiv preprint arXiv:1912.12888},
-  year={2019}
+@article{feng2020hlnet,
+  title={HLNet: A Unified Framework for Real-Time Segmentation and Facial Skin Tones Evaluation},
+  author={Feng, Xinglong, Gao, Xianwen and Luo, Ling},
+  journal={Symmetry},
+  volume={12},
+  number={11},
+  pages={1812},
+  year={2020},
+  publisher={Multidisciplinary Digital Publishing Institute}
 }
 ```
 
