@@ -23,7 +23,7 @@ https://github.com/JACKYLUO1991/FaceParsing.
 
 ## Demos
 <div><div align=center>
-  <img src="https://github.com/JACKYLUO1991/Face-skin-hair-segmentaiton-and-skin-color-evaluation/blob/master/res/5-4.png" width="300" height="300" alt="raw"/></div>
+  <img src="https://github.com/JACKYLUO1991/Face-skin-hair-segmentaiton-and-skin-color-evaluation/blob/master/res/5-4.png" width="256" height="256" alt="raw"/></div>
 
 ## Please cited:
 ```
