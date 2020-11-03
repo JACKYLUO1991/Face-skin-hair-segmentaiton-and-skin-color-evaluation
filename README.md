@@ -18,8 +18,12 @@ and approximate 80% classification accuracy demonstrate the feasibility of the p
 ## The latest open source work:
 https://github.com/JACKYLUO1991/FaceParsing.
 
-## Problem correction:
+## **Problem correction:**
 *It is worth noting that some training sets are mistaken for test sets in image file copying, which leads to high results in arXiv. The current version has been corrected.*
+
+## Demos
+<div><div align=center>
+  <img src="https://github.com/JACKYLUO1991/Face-skin-hair-segmentaiton-and-skin-color-evaluation/blob/master/res/5-4.png" width="300" height="300" alt="raw"/></div>
 
 ## Please cited:
 ```
