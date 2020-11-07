@@ -29,7 +29,7 @@ https://github.com/JACKYLUO1991/FaceParsing.
 ```
 @article{feng2020hlnet,
   title={HLNet: A Unified Framework for Real-Time Segmentation and Facial Skin Tones Evaluation},
-  author={Feng, Xinglong, Gao, Xianwen and Luo, Ling},
+  author={Feng, Xinglong and Gao, Xianwen and Luo, Ling},
   journal={Symmetry},
   volume={12},
   number={11},
